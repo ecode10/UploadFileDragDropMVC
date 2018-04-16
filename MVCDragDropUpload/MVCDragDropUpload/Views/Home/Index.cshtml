@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Arraste e jogue o arquivo</h2>
+<div id="AreaDeUpload">
+    Arraste seus arquivos nesta área.
+</div>
+
+<ul class="list-group rodape" id="uploadList"></ul>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<style>
+    #AreaDeUpload {
+        background: #f1f1f1;
+        border: black dashed 1px;
+        height: 200px;
+        text-align: center;
+        color: #000;
+        padding-top: 12px;
+        text-align: center;
+        vertical-align: central;
+    }
+
+    .ArtivarDrop {
+        background: #77bafa !important;
+        border: solid 2px blue !important;
+        opacity: .5;
+        color: black !important;
+    }
+
+    .rodape {
+        text-align: center;
+        border: solid 0px Gray;
+        font-size: 8pt;
+        font-family: Verdana;
+        font-weight: bold;
+        width: 100%;
+        color: Black;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background: #77bafa;
+    }
+</style>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.filedrop.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#AreaDeUpload').filedrop({
+                url: '@Url.Action("EnviarArquivos")',
+                allowedfiletypes: [],
+                allowedfileextensions: [],
+                paramname: 'files',
+                maxfiles: 5,
+                maxfilesize: 5, // in MB
+                dragOver: function () {
+                    $('#AreaDeUpload').addClass('ArtivarDrop');
+                },
+                dragLeave: function () {
+                    $('#AreaDeUpload').removeClass('ArtivarDrop');
+                },
+                drop: function () {
+                    $('#AreaDeUpload').removeClass('ArtivarDrop');
+                },
+                afterAll: function (e) {
+                    $('#AreaDeUpload').html('arquivos enviados com sucesso.');
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadList').append('<li class="list-group-item">'+file.name+' enviado com sucesso.</li>')
+                }
+            })
+        })
+    </script>
+}
+
